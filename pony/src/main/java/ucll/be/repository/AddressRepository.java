@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import ucll.be.model.Address;
 import ucll.be.repository.row_mappers.AddressRowMapper;
 
-
+@Repository
 public class AddressRepository {
     
     private JdbcTemplate jdbcTemplate;
