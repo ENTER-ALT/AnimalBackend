@@ -50,8 +50,8 @@ public class MedicalRecordIntegrationTest {
                 .uri("/medicalrecord/{animalId}/{registerDate}", animalId, registerDate)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(MedicalRecord.class)
-                .hasSize(expectedSize);
+                .expectBody()
+                .jsonPath("$.length()").isEqualTo(expectedSize);
     }
 
     @Test
@@ -68,12 +68,8 @@ public class MedicalRecordIntegrationTest {
                 .bodyValue(medicalRecord)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(MedicalRecord.class)
-                .value(md -> {
-                    md.getDescription().equals(medicalRecord.getDescription());
-                    md.getRegistrationDate().equals(medicalRecord.getRegistrationDate());
-                    md.getAnimal().equals(medicalRecord.getAnimal());
-                });
+                .expectBody()
+                .json("{description: '" + medicalRecord.getDescription() + "', registrationDate: '" + medicalRecord.getRegistrationDate() + "', animal: {id: " + animal.getId() + "}}");
     }
 
     @Test
@@ -85,6 +81,7 @@ public class MedicalRecordIntegrationTest {
                 .uri("/medicalrecord/{medicalRecordId}/{closingDate}", medicalRecordId, closingDate)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(MedicalRecord.class);
+                .expectBody()
+                .json("{id: " + medicalRecordId + ", closingDate: '" + closingDate + "'}");
     }
 }

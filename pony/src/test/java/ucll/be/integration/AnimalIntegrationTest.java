@@ -48,7 +48,7 @@ public class AnimalIntegrationTest {
         Pony animal = AnimalTest.createDefaultPony();
         
         webTestClient.post()
-                .uri("/animals")
+                .uri("/animals/pony")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(animal)
                 .exchange()
@@ -95,8 +95,8 @@ public class AnimalIntegrationTest {
                 .uri("/animals")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(Animal.class)
-                .hasSize(expectedSize);
+                .expectBody()
+                .jsonPath("$.length()").isEqualTo(expectedSize);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class AnimalIntegrationTest {
                 .uri("/animals/{age}", age)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(Animal.class)
+                .expectBodyList(Pony.class)
                 .hasSize(expectedSize);
     }
 
@@ -145,7 +145,7 @@ public class AnimalIntegrationTest {
                 .uri("/animals/openmedicalrecords")
                 .exchange()
                 .expectStatus().isOk()
-                .expectBodyList(Animal.class)
-                .hasSize(expectedSize);
+                .expectBody()
+                .jsonPath("$.length()").isEqualTo(expectedSize);
     }
 }

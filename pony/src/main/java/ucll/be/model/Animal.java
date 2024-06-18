@@ -19,7 +19,7 @@ import jakarta.validation.constraints.NotBlank;
 @Table(name = "MY_ANIMALS")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "animal_type")
-public abstract class Animal {
+public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
